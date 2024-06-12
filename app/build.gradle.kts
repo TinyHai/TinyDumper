@@ -7,6 +7,18 @@ android {
     namespace = "cn.tinyhai.tiny_dumper"
     compileSdk = 34
 
+    signingConfigs {
+        val jks = file("../keystore.jks")
+        if (jks.exists()) {
+            register("release") {
+                storeFile = jks
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     defaultConfig {
         applicationId = "cn.tinyhai.tiny_dumper"
         minSdk = 27
@@ -19,12 +31,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = getByName("debug").signingConfig
+            signingConfig = signingConfigs.findByName("release") ?: getByName("debug").signingConfig
         }
     }
     compileOptions {
