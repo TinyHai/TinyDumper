@@ -1,0 +1,12 @@
+[versions]
+agp = "8.6.0-alpha04"
+api = "82"
+kotlin = "2.0.0"
+
+[libraries]
+api = { module = "de.robv.android.xposed:api", version.ref = "api" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
